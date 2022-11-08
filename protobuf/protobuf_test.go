@@ -159,20 +159,20 @@ func TestProtobuf(t *testing.T) {
 	c := New(t)
 	c.Run("TestProtobuf", func(c *C) {
 		// create a new protobuf message
-		msg := &Access{
+		access := &Access{
 			Type:    1,
 			Account: []byte("test"),
 			Enable:  true,
 		}
 		// encode the message
-		data, err := proto.Marshal(msg)
+		data, err := proto.Marshal(access)
 		c.Assert(err, IsNil)
 		// decode the message
-		msg2 := &Access{}
-		err = proto.Unmarshal(data, msg2)
+		access2 := &Access{}
+		err = proto.Unmarshal(data, access2)
 		c.Assert(err, IsNil)
-		c.Assert(msg2.Type, Equals, msg.Type)
-		c.Assert(msg2.Account, DeepEquals, msg.Account)
-		c.Assert(msg2.Enable, Equals, msg.Enable)
+		c.Assert(access2.Type, Equals, access.Type)
+		c.Assert(access2.Account, DeepEquals, access.Account)
+		c.Assert(access2.Enable, Equals, access.Enable)
 	})
 }
