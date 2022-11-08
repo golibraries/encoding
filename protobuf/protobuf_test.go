@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "github.com/frankban/quicktest"
-	proto "github.com/golibraries/encoding/protobuf"
+	"github.com/golibraries/encoding/protobuf"
 
 	reflect "reflect"
 	sync "sync"
@@ -158,21 +158,18 @@ func file_external_proto_cli_struct_proto_init() {
 func TestProtobuf(t *testing.T) {
 	c := New(t)
 	c.Run("TestProtobuf", func(c *C) {
-		// create a new protobuf message
-		access := &Access{
+		data, err := protobuf.Marshal(&Access{
 			Type:    1,
 			Account: []byte("test"),
 			Enable:  true,
-		}
-		// encode the message
-		data, err := proto.Marshal(access)
+		})
 		c.Assert(err, IsNil)
-		// decode the message
-		access2 := &Access{}
-		err = proto.Unmarshal(data, access2)
+
+		access := &Access{}
+		err = protobuf.Unmarshal(data, access)
 		c.Assert(err, IsNil)
-		c.Assert(access2.Type, Equals, access.Type)
-		c.Assert(access2.Account, DeepEquals, access.Account)
-		c.Assert(access2.Enable, Equals, access.Enable)
+		c.Assert(access.Type, Equals, int32(1))
+		c.Assert(access.Account, DeepEquals, []byte("test"))
+		c.Assert(access.Enable, Equals, true)
 	})
 }

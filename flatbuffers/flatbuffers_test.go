@@ -127,8 +127,10 @@ func TestFlatbuffers(t *testing.T) {
 		builder.Finish(AccessEnd(builder))
 		data, err := fb.Marshal(builder)
 		c.Assert(err, IsNil)
-		var access Access
-		c.Assert(fb.Unmarshal(data, &access), IsNil)
+
+		access := &Access{}
+		err = fb.Unmarshal(data, access)
+		c.Assert(err, IsNil)
 		c.Assert(access.Type(), Equals, int64(1))
 		c.Assert(access.Enable(), Equals, true)
 	})

@@ -17,19 +17,19 @@ type Access struct {
 func TestJSON(t *testing.T) {
 	c := New(t)
 	c.Run("TestJSON", func(c *C) {
-		a := &Access{
+		data, err := json.Marshal(&Access{
 			Type:    1,
 			Account: []byte("123456"),
 			Enable:  true,
-		}
-		b, err := json.Marshal(a)
+		})
 		c.Assert(err, IsNil)
-		c.Assert(string(b), Equals, `{"type":1,"account":"MTIzNDU2","enable":true}`)
+		c.Assert(string(data), Equals, `{"type":1,"account":"MTIzNDU2","enable":true}`)
 
-		var access Access
-		c.Assert(json.Unmarshal(b, &access), IsNil)
+		access := &Access{}
+		err = json.Unmarshal(data, access)
+		c.Assert(err, IsNil)
 		c.Assert(access.Type, Equals, int64(1))
-		c.Assert(access.Enable, Equals, true)
 		c.Assert(access.Account, DeepEquals, []byte("123456"))
+		c.Assert(access.Enable, Equals, true)
 	})
 }

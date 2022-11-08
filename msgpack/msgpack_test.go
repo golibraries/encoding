@@ -16,17 +16,18 @@ type Access struct {
 func TestMsgpack(t *testing.T) {
 	c := New(t)
 	c.Run("TestMsgpack", func(c *C) {
-		access := &Access{
+		data, err := msgpack.Marshal(&Access{
 			Type:    1,
 			Account: []byte("123456"),
 			Enable:  true,
-		}
-		data, err := msgpack.Marshal(access)
+		})
 		c.Assert(err, IsNil)
-		var acess2 Access
-		c.Assert(msgpack.Unmarshal(data, &acess2), IsNil)
-		c.Assert(acess2.Type, Equals, int64(1))
-		c.Assert(acess2.Enable, Equals, true)
-		c.Assert(acess2.Account, DeepEquals, []byte("123456"))
+
+		access := &Access{}
+		err = msgpack.Unmarshal(data, access)
+		c.Assert(err, IsNil)
+		c.Assert(access.Type, Equals, int64(1))
+		c.Assert(access.Enable, Equals, true)
+		c.Assert(access.Account, DeepEquals, []byte("123456"))
 	})
 }
