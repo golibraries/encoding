@@ -1,0 +1,10 @@
+syntax = "proto3";
+package cli;
+
+option go_package = "test";
+
+message Access {
+  int64 type = 1;
+  bytes account = 2;
+  bool enable = 3;
+}

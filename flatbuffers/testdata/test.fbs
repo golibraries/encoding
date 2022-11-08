@@ -1,0 +1,8 @@
+namespace test;
+
+table Access {
+  type:long;
+  account:[ubyte];
+  enable:bool;
+}
+
