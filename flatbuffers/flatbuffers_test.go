@@ -10,26 +10,6 @@ import (
 	fb "github.com/golibraries/encoding/flatbuffers"
 )
 
-
-func TestFlatbuffers(t *testing.T) {
-	c := New(t)
-	c.Run("TestFlatbuffers", func(c *C) {
-		builder := flatbuffers.NewBuilder(0)
-		AccessStart(builder)
-		AccessAddType(builder, 1)
-		// cannot nested vector
-		// AccessAddAccount(builder, builder.CreateByteVector([]byte{1, 2, 3}))
-		AccessAddEnable(builder, true)
-		builder.Finish(AccessEnd(builder))
-		data, err := fb.Marshal(builder)
-		c.Assert(err, IsNil)
-		var access Access
-		c.Assert(fb.Unmarshal(data, &access), IsNil)
-		c.Assert(access.Type(), Equals, int64(1))
-		c.Assert(access.Enable(), Equals, true)
-	})
-}
-
 type Access struct {
 	_tab flatbuffers.Table
 }
@@ -132,4 +112,24 @@ func AccessAddEnable(builder *flatbuffers.Builder, enable bool) {
 }
 func AccessEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()
+}
+
+
+func TestFlatbuffers(t *testing.T) {
+	c := New(t)
+	c.Run("TestFlatbuffers", func(c *C) {
+		builder := flatbuffers.NewBuilder(0)
+		AccessStart(builder)
+		AccessAddType(builder, 1)
+		// cannot nested vector
+		// AccessAddAccount(builder, builder.CreateByteVector([]byte{1, 2, 3}))
+		AccessAddEnable(builder, true)
+		builder.Finish(AccessEnd(builder))
+		data, err := fb.Marshal(builder)
+		c.Assert(err, IsNil)
+		var access Access
+		c.Assert(fb.Unmarshal(data, &access), IsNil)
+		c.Assert(access.Type(), Equals, int64(1))
+		c.Assert(access.Enable(), Equals, true)
+	})
 }
