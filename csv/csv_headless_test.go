@@ -3,21 +3,14 @@ package csv_test
 import (
 	"testing"
 
-	"github.com/golibraries/encoding/csv"
-
 	. "github.com/frankban/quicktest"
+	"github.com/golibraries/encoding/csv"
 )
 
-type Access struct {
-	Type    int64  `csv:"type"`
-	Account string `csv:"account"`
-	Enable  bool   `csv:"enable"`
-}
-
-func TestCSV(t *testing.T) {
+func TestCSVHeadless(t *testing.T) {
 	c := New(t)
 	c.Run("TestCSV", func(c *C) {
-		data, err := csv.Marshal([]*Access{{
+		data, err := csv.MarshalHeadless([]*Access{{
 			Type:    1,
 			Account: "123456",
 			Enable:  true,
@@ -25,7 +18,7 @@ func TestCSV(t *testing.T) {
 		c.Assert(err, IsNil)
 
 		accesses := []*Access{}
-		err = csv.Unmarshal(data, &accesses)
+		err = csv.UnmarshalHeadless(data, &accesses)
 		c.Assert(err, IsNil)
 		c.Assert(accesses[0].Type, Equals, int64(1))
 		c.Assert(accesses[0].Account, DeepEquals, "123456")

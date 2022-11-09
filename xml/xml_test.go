@@ -10,7 +10,7 @@ import (
 
 type Access struct {
 	Type    int64  `xml:"type"`
-	Account []byte `xml:"account"`
+	Account string `xml:"account"`
 	Enable  bool   `xml:"enable"`
 }
 
@@ -19,7 +19,7 @@ func TestXML(t *testing.T) {
 	c.Run("TestXML", func(c *C) {
 		data, err := xml.Marshal(&Access{
 			Type:    1,
-			Account: []byte("123456"),
+			Account: "123456",
 			Enable:  true,
 		})
 		c.Assert(err, IsNil)
@@ -29,7 +29,7 @@ func TestXML(t *testing.T) {
 		err = xml.Unmarshal(data, access)
 		c.Assert(err, IsNil)
 		c.Assert(access.Type, Equals, int64(1))
+		c.Assert(access.Account, DeepEquals, "123456")
 		c.Assert(access.Enable, Equals, true)
-		c.Assert(access.Account, DeepEquals, []byte("123456"))
 	})
 }

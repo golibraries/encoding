@@ -19,7 +19,7 @@ type Access struct {
 	unknownFields protoimpl.UnknownFields
 
 	Type    int64  `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
-	Account []byte `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
+	Account string `protobuf:"string,2,opt,name=account,proto3" json:"account,omitempty"`
 	Enable  bool   `protobuf:"varint,3,opt,name=enable,proto3" json:"enable,omitempty"`
 }
 
@@ -62,11 +62,11 @@ func (x *Access) GetType() int64 {
 	return 0
 }
 
-func (x *Access) GetAccount() []byte {
+func (x *Access) GetAccount() string {
 	if x != nil {
 		return x.Account
 	}
-	return nil
+	return ""
 }
 
 func (x *Access) GetEnable() bool {
@@ -160,7 +160,7 @@ func TestProtobuf(t *testing.T) {
 	c.Run("TestProtobuf", func(c *C) {
 		data, err := protobuf.Marshal(&Access{
 			Type:    1,
-			Account: []byte("test"),
+			Account: "123456",
 			Enable:  true,
 		})
 		c.Assert(err, IsNil)
@@ -168,8 +168,8 @@ func TestProtobuf(t *testing.T) {
 		access := &Access{}
 		err = protobuf.Unmarshal(data, access)
 		c.Assert(err, IsNil)
-		c.Assert(access.Type, Equals, int32(1))
-		c.Assert(access.Account, DeepEquals, []byte("test"))
+		c.Assert(access.Type, Equals, int64(1))
+		c.Assert(access.Account, DeepEquals, "123456")
 		c.Assert(access.Enable, Equals, true)
 	})
 }

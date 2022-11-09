@@ -9,7 +9,7 @@ import (
 
 type Access struct {
 	Type    int64  `msgpack:"type"`
-	Account []byte `msgpack:"account"`
+	Account string `msgpack:"account"`
 	Enable  bool   `msgpack:"enable"`
 }
 
@@ -18,7 +18,7 @@ func TestMsgpack(t *testing.T) {
 	c.Run("TestMsgpack", func(c *C) {
 		data, err := msgpack.Marshal(&Access{
 			Type:    1,
-			Account: []byte("123456"),
+			Account: "123456",
 			Enable:  true,
 		})
 		c.Assert(err, IsNil)
@@ -28,6 +28,6 @@ func TestMsgpack(t *testing.T) {
 		c.Assert(err, IsNil)
 		c.Assert(access.Type, Equals, int64(1))
 		c.Assert(access.Enable, Equals, true)
-		c.Assert(access.Account, DeepEquals, []byte("123456"))
+		c.Assert(access.Account, DeepEquals, "123456")
 	})
 }

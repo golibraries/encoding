@@ -1,4 +1,4 @@
-package csvheadless
+package csv
 
 import (
 	"bytes"
@@ -21,16 +21,16 @@ func (csvheadless) Unmarshal(data []byte, v interface{}) error {
 	return o.UnmarshalWithoutHeaders(bytes.NewBuffer(data), v)
 }
 
-func New() *csvheadless {
+func NewHeadless() *csvheadless {
 	return &csvheadless{}
 }
 
-var e = New()
+var eHeadless = NewHeadless()
 
-func Marshal(v interface{}) ([]byte, error) {
+func MarshalHeadless(v interface{}) ([]byte, error) {
 	return e.Marshal(v)
 }
 
-func Unmarshal(data []byte, v interface{}) error {
+func UnmarshalHeadless(data []byte, v interface{}) error {
 	return e.Unmarshal(data, v)
 }
