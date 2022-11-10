@@ -18,3 +18,17 @@ func (properties) Unmarshal(data []byte, v any) error {
 	}
 	return p.Decode(v)
 }
+
+func New() *properties {
+	return &properties{}
+}
+
+var e = New()
+
+func Marshal(v any) ([]byte, error) {
+	return e.Marshal(v)
+}
+
+func Unmarshal(data []byte, v any) error {
+	return e.Unmarshal(data, v)
+}
