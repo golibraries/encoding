@@ -38,6 +38,7 @@ func (properties) Marshal(v any) ([]byte, error) {
 	// }
 
 	// return buf.Bytes(), nil
+	return nil, nil
 }
 
 func (properties) Unmarshal(data []byte, v any) error {
