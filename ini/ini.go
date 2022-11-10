@@ -1,6 +1,6 @@
 package ini
 
-type ini struct{}
+type ini struct{} // auto sort keys
 
 func (ini) Marshal(v interface{}) ([]byte, error) {
 	// TODO: implement

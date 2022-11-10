@@ -1,6 +1,6 @@
 package env
 
-type env struct{}
+type env struct{} // auto sort keys
 
 func (env) Marshal(v any) ([]byte, error) {
 	// TODO: implement
