@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/frankban/quicktest v1.14.3
 	github.com/gocarina/gocsv v0.0.0-20221105105431-c8ef78125b99
-	github.com/golibraries/cast v1.0.4
+	github.com/golibraries/cast v1.0.5
 	github.com/google/flatbuffers v22.10.26+incompatible
 	github.com/magiconair/properties v1.8.6
 	github.com/pelletier/go-toml/v2 v2.0.5

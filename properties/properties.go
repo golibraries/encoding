@@ -1,46 +1,43 @@
 package properties
 
 import (
-	"bytes"
-	"sort"
-
 	o "github.com/magiconair/properties"
-
-	"github.com/golibraries/cast"
 )
 
 type properties struct{}
 
 func (properties) Marshal(v any) ([]byte, error) {
-	m, err := cast.ToFlatStringMapE(v)
-	if err != nil {
-		return nil, err
-	}
+	// TODO
 
-	keys := make([]string, 0, len(m))
+	// m, err := cast.ToFlatStringMapE(v)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	for key := range m {
-		keys = append(keys, key)
-	}
+	// keys := make([]string, 0, len(m))
 
-	sort.Strings(keys)
+	// for key := range m {
+	// 	keys = append(keys, key)
+	// }
 
-	p := o.NewProperties()
-	for _, key := range keys {
-		_, _, err := p.Set(key, cast.ToString(m[key]))
-		if err != nil {
-			return nil, err
-		}
-	}
+	// sort.Strings(keys)
 
-	var buf bytes.Buffer
+	// p := o.NewProperties()
+	// for _, key := range keys {
+	// 	_, _, err := p.Set(key, cast.ToString(m[key]))
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// }
 
-	_, err = p.WriteComment(&buf, "#", o.UTF8)
-	if err != nil {
-		return nil, err
-	}
+	// var buf bytes.Buffer
 
-	return buf.Bytes(), nil
+	// _, err = p.WriteComment(&buf, "#", o.UTF8)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// return buf.Bytes(), nil
 }
 
 func (properties) Unmarshal(data []byte, v any) error {
