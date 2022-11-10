@@ -9,7 +9,7 @@ import (
 	"github.com/golibraries/cast"
 )
 
-type properties struct{} // auto sort keys
+type properties struct{}
 
 func (properties) Marshal(v any) ([]byte, error) {
 	m, err := cast.ToFlatStringMapE(v)

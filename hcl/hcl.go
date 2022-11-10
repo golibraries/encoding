@@ -1,6 +1,6 @@
 package hcl
 
-type hcl struct{} // auto sort keys
+type hcl struct{}
 
 func (hcl) Marshal(v any) ([]byte, error) {
 	// TODO: implement

@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ErrProtobufWrongValueType = errors.New("protobuf: wrong type value")
+	errProtobufWrongValueType = errors.New("protobuf: wrong type value")
 )
 
 type protobuf struct{}
@@ -15,7 +15,7 @@ type protobuf struct{}
 func (protobuf) Marshal(v any) ([]byte, error) {
 	pb, ok := v.(o.Message)
 	if !ok {
-		return nil, ErrProtobufWrongValueType
+		return nil, errProtobufWrongValueType
 	}
 	return o.Marshal(pb)
 }
@@ -23,7 +23,7 @@ func (protobuf) Marshal(v any) ([]byte, error) {
 func (protobuf) Unmarshal(data []byte, v any) error {
 	pb, ok := v.(o.Message)
 	if !ok {
-		return ErrProtobufWrongValueType
+		return errProtobufWrongValueType
 	}
 	return o.Unmarshal(data, pb)
 }
